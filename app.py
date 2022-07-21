@@ -2,6 +2,20 @@ import pickle
 import streamlit as st
 import requests
 
+def _max_width_():
+    max_width_str = f"max-width: 1800px;"
+    st.markdown(
+        f"""
+    <style>
+    .reportview-container .main .block-container{{
+        {max_width_str}
+    }}
+    </style>    
+    """,
+        unsafe_allow_html=True,
+    )
+
+
 def fetch_poster(movie_id):
     url = "https://api.themoviedb.org/3/movie/{}?api_key=8265bd1679663a7ea12ac168da84d2e8&language=en-US".format(movie_id)
     data = requests.get(url)
@@ -23,10 +37,17 @@ def recommend(movie):
 
     return recommended_movie_names,recommended_movie_posters
 
-st.markdown("<h1 style='text-align: center; color: black;'>Movie Recommender System</h1>", unsafe_allow_html=True)
-st.markdown("<h4 style='text-align: center; color: black;'>Find a similar movie from a dataset of 5,000 movies!</h4>", unsafe_allow_html=True)
-st.markdown("<h4 style='text-align: center; color: black;'>Web App created by Sagar Bapodara</h4>", unsafe_allow_html=True)
+st.set_page_config(page_icon="🎬", page_title="MRS")
 
+st.image(
+    "assets/clapper-board_1f3ac.png",
+    width=100,
+)
+
+st.title("Movie Recommendation System")
+st.markdown("<h4 style='color: white;'>Get Movie Recommendations Based on the Movie that you like ❤️</h4>", unsafe_allow_html=True)
+st.markdown("<h5 style='color: white;'>By Team 19</h4>", unsafe_allow_html=True)
+st.markdown("<h5 style='color: white;'> </h4>", unsafe_allow_html=True)
 
 movies = pickle.load(open('movies.pkl','rb'))
 similarity = pickle.load(open('similarity.pkl','rb'))
